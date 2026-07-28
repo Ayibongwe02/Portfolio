@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ project.name }} — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="page-header project-detail-head" style="--accent-line: var(--{{ project.accent if project.accent != 'mixed' else 'amber' }})">
+  <div class="wrap">
+    <a href="{{ url_for('projects') }}" data-internal class="back-link reveal" data-reveal="left">← All systems</a>
+    <span class="project-status reveal" data-reveal="up" style="--i:1"><span class="dot"></span>{{ project.status }}</span>
+    <h1 class="section-title big reveal" data-reveal="up" style="--i:2">{{ project.name }}</h1>
+    <p class="project-tagline big reveal" data-reveal="up" style="--i:3">{{ project.tagline }}</p>
+
+    <div class="project-links reveal" data-reveal="up" style="--i:4">
+      {% for l in project.links %}
+      <a class="chip-link {{ 'primary' if l.primary }}" href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }} {{ '→' if l.primary else '↗' }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <p class="project-desc big reveal" data-reveal="up">{{ project.description }}</p>
+
+    <div class="pp-grid reveal" data-reveal="up">
+      <div class="pp-block problem">
+        <div class="pp-label">⚠ Problem</div>
+        <p class="pp-text">{{ project.problem }}</p>
+      </div>
+      <div class="pp-block solution">
+        <div class="pp-label">✓ Solution</div>
+        <p class="pp-text">{{ project.solution }}</p>
+      </div>
+      <div class="pp-block next">
+        <div class="pp-label">→ Next</div>
+        <p class="pp-text">{{ project.next }}</p>
+      </div>
+    </div>
+
+    <div class="reveal" data-reveal="up">
+      <div class="mini-eyebrow">Highlights</div>
+      <ul class="highlights">
+        {% for h in project.highlights %}
+        <li style="--i:{{ loop.index0 }}">{{ h }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="reveal" data-reveal="up">
+      <div class="mini-eyebrow">Stack</div>
+      <div class="stack-row">
+        {% for s in project.stack %}<span class="stack-tag">{{ s }}</span>{% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="prev-next-section">
+  <div class="wrap prev-next-grid">
+    <a href="{{ url_for('project_detail', slug=prev_project.slug) }}" data-internal class="pn-card reveal" data-reveal="left">
+      <span class="pn-label">← Previous</span>
+      <span class="pn-name">{{ prev_project.name }}</span>
+    </a>
+    <a href="{{ url_for('project_detail', slug=next_project.slug) }}" data-internal class="pn-card pn-right reveal" data-reveal="right">
+      <span class="pn-label">Next →</span>
+      <span class="pn-name">{{ next_project.name }}</span>
+    </a>
+  </div>
+</section>
+{% endblock %}

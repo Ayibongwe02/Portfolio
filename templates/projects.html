@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Projects — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-reveal="up">01 — Live Systems</div>
+    <h1 class="section-title big reveal" data-reveal="up" style="--i:1">Five systems, built end-to-end</h1>
+    <p class="section-sub reveal" data-reveal="up" style="--i:2">Forecasting, classification, anomaly detection, a full ML training platform, and a batch-scoring app built on top of it — each one linked to its own case study.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="project-index-grid">
+      {% for p in projects %}
+      <a href="{{ url_for('project_detail', slug=p.slug) }}" data-internal
+         class="project-index-card trace-card reveal" data-reveal="up" style="--i:{{ loop.index0 }}; --accent-line: var(--{{ p.accent if p.accent != 'mixed' else 'amber' }})">
+        <div class="pic-top">
+          <span class="project-status"><span class="dot"></span>{{ p.status }}</span>
+          <span class="pic-arrow">→</span>
+        </div>
+        <h2 class="pic-name">{{ p.name }}</h2>
+        <p class="pic-tagline">{{ p.tagline }}</p>
+        <p class="pic-desc">{{ p.description[:150] }}…</p>
+        <div class="stack-row">
+          {% for s in p.stack %}<span class="stack-tag">{{ s }}</span>{% endfor %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      FLASK_ENV: production
+    volumes:
+      - ./static:/app/static:ro
+      - ./templates:/app/templates:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/').read()"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    # Uncomment for development with hot reload:
+    # develop:
+    #   watch:
+    #     - action: sync
+    #       path: .
+    #       target: /app
+    #       ignore:
+    #         - __pycache__
+    #         - .pytest_cache
+    #         - .venv

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Ayibongwe Ndhlovu — Data & ML Systems{% endblock %}</title>
+<meta name="description" content="Ayibongwe Ndhlovu — data scientist building end-to-end forecasting, classification, anomaly detection, and ML platform systems. Available for freelance & contract work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block extra_head %}{% endblock %}
+</head>
+<body class="pre-load">
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="{{ url_for('home') }}" class="nav-mark" data-internal>
+      <span class="dot"></span> AYIBONGWE.NDHLOVU
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="{{ url_for('home') }}" data-internal class="{{ 'is-active' if active=='home' }}">Home</a>
+      <a href="{{ url_for('projects') }}" data-internal class="{{ 'is-active' if active=='projects' }}">Projects</a>
+      <a href="{{ url_for('skills') }}" data-internal class="{{ 'is-active' if active=='skills' }}">Skills</a>
+      <a href="{{ url_for('hire') }}" data-internal class="nav-cta {{ 'is-active' if active=='hire' }}">Hire me →</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </div>
+</nav>
+
+<main class="page-content">
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 {{ profile.name }} — Flask backend, vanilla JS, hand-written CSS.</span>
+    <div class="footer-links">
+      <a href="mailto:{{ profile.email }}">Email</a>
+      <a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>
+      <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

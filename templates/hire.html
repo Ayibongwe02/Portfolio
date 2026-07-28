@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Hire — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="hire-page">
+  <div class="wrap hire-grid">
+    <div class="hire-pitch">
+      <div class="eyebrow reveal" data-reveal="up">03 — Availability</div>
+      <h1 class="section-title big reveal" data-reveal="up" style="--i:1">Available for freelance &amp; contract builds</h1>
+      <p class="reveal" data-reveal="up" style="--i:2">
+        Every project on this site shipped the same way: <strong>a real problem,
+        a model that's actually trained and validated (not assumed), and a
+        working interface someone outside my own head can use.</strong> That's
+        the same process I'd bring to your data.
+      </p>
+      <p class="reveal" data-reveal="up" style="--i:3">
+        If you have a dataset and a decision that depends on it — who's likely
+        to churn, where a balance is heading, what traffic looks anomalous — I
+        can take it from CSV to a deployed, containerized app your team can
+        actually open in a browser.
+      </p>
+
+      <div class="deliver-list">
+        {% for d in deliverables %}
+        <div class="deliver-item reveal" data-reveal="up" style="--i:{{ loop.index0 }}">
+          <div class="deliver-num">0{{ loop.index }}</div>
+          <div class="deliver-body">
+            <h4>{{ d.title }}</h4>
+            <p>{{ d.body }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="contact-panel tilt-card reveal" data-reveal="right" id="contact">
+      <div class="avail-badge"><span class="dot"></span> Currently open to new contracts</div>
+      <div class="rp-head">Reach me directly</div>
+      <div class="contact-list">
+        <button class="contact-row" id="copyEmail" data-copy="{{ profile.email }}" type="button">
+          <span class="contact-k">Email</span>
+          <span class="contact-v" id="emailText">{{ profile.email }}</span>
+        </button>
+        <a class="contact-row" href="{{ profile.github_url }}" target="_blank" rel="noopener">
+          <span class="contact-k">GitHub</span>
+          <span class="contact-v">{{ profile.github }}</span>
+        </a>
+        <a class="contact-row" href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">
+          <span class="contact-k">LinkedIn</span>
+          <span class="contact-v">{{ profile.linkedin }}</span>
+        </a>
+      </div>
+      <a href="mailto:{{ profile.email }}?subject=Freelance%20project%20inquiry" class="btn btn-primary">Email me about a project →</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  const copyBtn = document.getElementById('copyEmail');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const val = copyBtn.getAttribute('data-copy');
+      try {
+        await navigator.clipboard.writeText(val);
+        const label = document.getElementById('emailText');
+        const original = label.textContent;
+        label.textContent = 'Copied ✓';
+        copyBtn.classList.add('copied');
+        setTimeout(() => { label.textContent = original; copyBtn.classList.remove('copied'); }, 1600);
+      } catch (e) { /* clipboard unavailable, silently ignore */ }
+    });
+  }
+</script>
+{% endblock %}

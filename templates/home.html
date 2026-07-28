@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Ayibongwe Ndhlovu — Data & ML Systems{% endblock %}
+
+{% block content %}
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Data & ML Systems</div>
+      <h1 class="display-name hero-anim" style="--d:0"><span>Ayibongwe</span><br><em>Ndhlovu</em></h1>
+      <div class="role-line hero-anim" style="--d:1">{{ profile.role }}</div>
+      <p class="hero-bio hero-anim" style="--d:2">
+        I take data from raw form through modeling and forecasting to a
+        working system someone can actually use — <strong>not dashboards that
+        replay pre-computed numbers, but apps that train, fit, and evaluate
+        their own models live</strong>. Five systems on this site cover
+        forecasting, classification, anomaly detection, a full self-built
+        ML training platform with auth, export, and CI/CD behind it, and a
+        batch-scoring app built on top of a model it exported.
+      </p>
+      <div class="hero-ctas hero-anim" style="--d:3">
+        <a href="{{ url_for('projects') }}" data-internal class="btn btn-primary">View live systems →</a>
+        <a href="{{ url_for('hire') }}" data-internal class="btn btn-ghost">Hire me</a>
+      </div>
+    </div>
+
+    <div class="readout-panel tilt-card hero-anim" style="--d:2" id="heroPanel">
+      <div class="rp-head">
+        <span>profile.sys</span>
+        <span class="rp-status"><span class="dot"></span> online</span>
+      </div>
+      <div class="rp-row"><span class="rp-k">DEGREE</span><span class="rp-v">{{ profile.degree }}</span></div>
+      <div class="rp-row"><span class="rp-k">FOCUS</span><span class="rp-v">{{ profile.focus }}</span></div>
+      <div class="rp-row"><span class="rp-k">BUILDS</span><span class="rp-v">{{ profile.builds }}</span></div>
+      <div class="rp-row"><span class="rp-k">SYSTEMS LIVE</span><span class="rp-v">{{ projects|length }}</span></div>
+      <div class="rp-row"><span class="rp-k">STATUS</span><span class="rp-v" style="color:var(--teal)">Open to contract work</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack" data-ticker='{{ ticker_items|tojson }}'></div>
+</div>
+
+<section class="stats-section">
+  <div class="wrap">
+    <div class="stats-grid">
+      {% for s in stats %}
+      <div class="stat-card reveal" data-reveal="up" style="--i:{{ loop.index0 }}">
+        <div class="stat-value" data-count="{{ s.value }}" data-decimals="{{ s.decimals or 0 }}" data-suffix="{{ s.suffix }}">0</div>
+        <div class="stat-label">{{ s.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="featured">
+  <div class="wrap">
+    <div class="section-head reveal" data-reveal="up">
+      <div>
+        <div class="eyebrow">01 — Featured</div>
+        <h2 class="section-title">Five systems, each trained live</h2>
+      </div>
+      <p class="section-sub">Every model is fit, trained, or evaluated inside the app itself — that's what "end-to-end" means in practice.</p>
+    </div>
+
+    <div class="preview-grid">
+      {% for p in projects %}
+      <a href="{{ url_for('project_detail', slug=p.slug) }}" data-internal class="preview-card trace-card reveal" data-reveal="up" style="--i:{{ loop.index0 }}; --accent-line: var(--{{ p.accent if p.accent != 'mixed' else 'amber' }})">
+        <span class="project-status"><span class="dot"></span>{{ p.status }}</span>
+        <h3 class="preview-name">{{ p.name }}</h3>
+        <p class="preview-tagline">{{ p.tagline }}</p>
+        <div class="stack-row">
+          {% for s in p.stack[:4] %}<span class="stack-tag">{{ s }}</span>{% endfor %}
+          {% if p.stack|length > 4 %}<span class="stack-tag">+{{ p.stack|length - 4 }}</span>{% endif %}
+        </div>
+        <span class="preview-link">Full case study →</span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="center-cta reveal" data-reveal="up">
+      <a href="{{ url_for('projects') }}" data-internal class="btn btn-ghost">See all systems in detail →</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

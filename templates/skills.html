@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Skills — {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-reveal="up">02 — Stack</div>
+    <h1 class="section-title big reveal" data-reveal="up" style="--i:1">What's under the hood</h1>
+    <p class="section-sub reveal" data-reveal="up" style="--i:2">The same stack runs across all four systems. Instead of made-up proficiency bars, here's exactly where each tool actually shipped.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="skills-grid">
+      {% for grp in skill_groups %}
+      <div class="skill-card reveal" data-reveal="up" style="--i:{{ loop.index0 }}">
+        <div class="sk-title">{{ grp.title }}</div>
+        <div class="stack-row">
+          {% for i in grp.tools %}<span class="stack-tag">{{ i }}</span>{% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <div class="mini-eyebrow reveal" data-reveal="up">Tool → Project Matrix</div>
+    <div class="matrix-table reveal" data-reveal="up">
+      <div class="matrix-row matrix-head">
+        <span class="matrix-tool">Tool</span>
+        {% for p in projects %}
+        <span class="matrix-dot-head" title="{{ p.name }}">{{ p.name.split(' ')[0] }}</span>
+        {% endfor %}
+      </div>
+      {% for tool, slugs in stack_matrix %}
+      <div class="matrix-row reveal" data-reveal="left" style="--i:{{ loop.index0 }}">
+        <span class="matrix-tool">{{ tool }}</span>
+        {% for p in projects %}
+          <span class="matrix-dot {{ 'is-on' if p.slug in slugs }}"></span>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
